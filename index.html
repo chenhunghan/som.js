@@ -1,11 +1,107 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" ng-app="ngApp">
 <head lang="en">
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <title>som.js</title>
-    Hello world.
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css">
+    <!--github ribbon by https://github.com/simonwhitaker/github-fork-ribbon-css-->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.1.1/gh-fork-ribbon.min.css" />
+    <!--[if lt IE 9]>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.1.1/gh-fork-ribbon.ie.min.css" />
+    <![endif]-->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:200,300,400,500,600,400italic">
+    <style>
+        p{
+            text-align: justify;
+            -webkit-hyphens: auto;
+            -moz-hyphens: auto;
+            -ms-hyphens: auto;
+            hyphens: auto;
+        }
+        pre code{
+            padding:10px;
+            background-color: rgba(0,0,0,0.1);
+        }
+
+    </style>
 </head>
+
 <body>
 
+<!--github ribbon by https://github.com/simonwhitaker/github-fork-ribbon-css-->
+<div class="github-fork-ribbon-wrapper right">
+    <div class="github-fork-ribbon">
+        <a href="https://github.com/chenhunghan/som.js">Fork me on GitHub</a>
+    </div>
+</div>
+<!--end github ribbon-->
+
+
+<div>
+    <div class="section">
+        <div class="container">
+            <h1 class="center light">som.js</h1>
+            <div class="row center">
+                <h5 class="light flow-text">Self-Organizing Map in Pure Javascript</h5>
+                <a class="waves-effect waves-light btn light-blue">Download v0.01</a>
+                <a class="waves-effect waves-light btn light-blue">API</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="section">
+        <div class="row">
+
+            <div class="col s12 m4">
+                <div>
+                    <h5 class="center">What's SOM ?</h5>
+                    <p class="light">The SOM is a learning algorithm introduced by the Finnish professor Teuvo Kohonen in the 1980s. It is a computationally convenient abstraction building on work on biologically neural models from the 1970s and morphogenesis models dating back to Alan Turing in the 1950s.</p>
+                    <p class="light">A self-organizing map (SOM) is a type of artificial neural network (ANN) that is trained using unsupervised learning to produce a low-dimensional (typically two-dimensional), discretized representation of the input space of the training samples, called a map. [<a href="http://en.wikipedia.org/wiki/Self-organizing_map"> ref. </a>]</p>
+                </div>
+            </div>
+
+            <div class="col s12 m4">
+                <div>
+                    <h5 class="center">SOM Algorithm in JS</h5>
+                    <p class="light">We plan to translate the core methods of SOM algorithm, which is elaborated in "<a href="http://docs.unigrafia.fi/publications/kohonen_teuvo/MATLAB_implementations_and_applications_of_the_self_organizing_map.pdf">MATLAB Implementations and Applications of the Self-Organizing Map</a>", from MATLAB into javascript.</p>
+                    <p class="light">The implementation will be written in javascript/typescript and could be used in modern browsers and node.js application. It will relayed on powerful <a href="http://mathjs.org/">Math.js</a> for the support of matrices and vectors.</p>
+                </div>
+            </div>
+
+            <div class="col s12 m4">
+                <div>
+                    <h5 class="center">Install & Testings</h5>
+                    <p class="light">You can install som.js via npm</p>
+                    <pre><code>npm install --save somjs</code></pre>
+                    <p class="light">Tests can be executed</p>
+                    <pre><code>npm test</code></pre>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="footer-copyright">
+    <div class="container">
+        <h6 class="center light">initiated on 1.5.2015, MIT licence</h6>
+    </div>
+</div>
+
+<script type="text/javascript" src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js"></script>
+<script>
+    (function($){
+        $(function(){
+
+
+        }); // end of document ready
+    })(jQuery); // end of jQuery name space
+</script>
 </body>
 </html>
