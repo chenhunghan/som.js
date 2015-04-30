@@ -8,19 +8,12 @@
   },
   "keywords": [
     "SOM",
-    "self-prganizing",
-    "map",
-    "artificial",
-    "neural",
-    "network",
-    "unsupervised",
-    "learning",
-    "data",
-    "visualizing",
-    "Kohonen",
-    "map",
-    "learning",
-    "algorithm"
+    "self-organizing map",
+    "artificial neural network",
+    "unsupervised learning",
+    "data visualizing",
+    "Kohonen map",
+    "learning algorithm"
   ],
   "author": "Jyrki Messo, Hung-Han Chen",
   "license": "MIT"
