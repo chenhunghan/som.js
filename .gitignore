@@ -29,6 +29,6 @@ build/Release
 node_modules
 
 #WebStorm files
-.idea
+.idea/workspcae.xml
 
 
