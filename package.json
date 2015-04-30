@@ -1,7 +1,7 @@
 {
   "name": "som.js",
   "version": "0.0.1",
-  "description": "The Self-Organizing Map in Pure Javascript",
+  "description": "Self-Organizing Map(SOM) in Pure Javascript",
   "main": "main.js",
   "scripts": {
     "test": "npm test"
