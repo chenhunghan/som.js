@@ -29,7 +29,5 @@ build/Release
 node_modules
 
 #WebStorm files
-.idea/*
-.idea/workspace.xml
-
-.idea/vcs.xml
+.idea
+.DS_Store
