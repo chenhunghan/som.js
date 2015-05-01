@@ -20,9 +20,13 @@
             -ms-hyphens: auto;
             hyphens: auto;
         }
-        pre code{
-            padding:10px;
+        pre{
+            overflow: hidden;
+        }
+        code{
+            padding:8px;
             background-color: rgba(0,0,0,0.1);
+
         }
 
     </style>
@@ -79,7 +83,10 @@
                     <p class="light">You can install som.js via npm</p>
                     <pre><code>npm install --save somjs</code></pre>
                     <p class="light">Tests can be executed</p>
+                    <pre><code>npm install</code></pre>
                     <pre><code>npm test</code></pre>
+                    <p class="light">Or both in node.js and browsers</p>
+                    <pre><code>npm run alltest</code></pre>
                 </div>
             </div>
         </div>
