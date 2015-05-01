@@ -4,7 +4,8 @@
   "description": "Self-Organizing Map(SOM) in Pure Javascript",
   "main": "main.js",
   "scripts": {
-    "test": "npm test"
+    "test": "mocha",
+    "alltest": "mocha && ./node_modules/karma/bin/karma start ./test/karma_config.js"
   },
   "keywords": [
     "SOM",
@@ -16,5 +17,14 @@
     "learning algorithm"
   ],
   "author": "Jyrki Messo, Hung-Han Chen",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "mathjs": "^1.6.0"
+  },
+  "devDependencies": {
+    "karma": "^0.12.31",
+    "karma-chrome-launcher": "^0.1.8",
+    "karma-mocha": "^0.1.10",
+    "mocha": "^2.2.4"
+  }
 }
