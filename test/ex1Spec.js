@@ -22,14 +22,21 @@ for (t = 1; t<100; t++) {
     var inputVector = jStat.rand(1,dimension)[0]
     for (i = 1; i < modelNumber; i++) {
         var range = jStat([inputVector, M[i]]).range();
-        //console.log(range)
         Q[i][0] = jStat(range).norm();
     };
     winnerIndex = _.findIndex(Q, [jStat(Q).min(true)]);
-
     var denominator = (1 + t/300000),
         learningRate = (0.3/denominator),
-        radius = Math.round(3/denominator);
+        radius = Math.round(3/denominator),
+        M = mutiReshape(M,8,8,2),
+        X = mutiReshape(X,1,1,2);
+        ch = ((winnerIndex-1) % 8) + 1
+        cv = Math.floor(winnerIndex-1)/8) + 1;
+        for (h = Math.min((ch+radius),8); h<Math.max((ch-radius),1); h++){
+            for (v = Math.min((cv+radius),8); v < Math.max((cv-radius),1); v++){
+
+            }
+        }
 }
 
 //console.log(inputVector)
