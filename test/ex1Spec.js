@@ -31,7 +31,7 @@ for (t = 1; t<100; t++) {
         M = mutiReshape(M,8,8,2),
         X = mutiReshape(X,1,1,2);
         ch = ((winnerIndex-1) % 8) + 1
-        cv = Math.floor(winnerIndex-1)/8) + 1;
+        cv = Math.floor((winnerIndex-1)/8+ 1);
         for (h = Math.min((ch+radius),8); h<Math.max((ch-radius),1); h++){
             for (v = Math.min((cv+radius),8); v < Math.max((cv-radius),1); v++){
 
