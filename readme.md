@@ -10,14 +10,13 @@ The implementation will be written in javascript/typescript and could be used in
 * [jStat](http://jstat.github.io/all.html)
 * [Ubuque](http://maxto.github.io/doc/contents.html)
 
-Teamwork tool:
+###Teamwork tool:
 
 <https://somjs.slack.com/> Signup [here](https://somjs.slack.com/signup)
 
-How-to in Wiki
+###How-to in Gihub Wiki:
 
-Getting Start!
-<https://github.com/chenhunghan/som.js/wiki/Getting-Start!>
-
-Make a new Branch
-<https://github.com/chenhunghan/som.js/wiki/Make-a-New-Branch>
+* Getting Start!
+  <https://github.com/chenhunghan/som.js/wiki/Getting-Start!>
+* Make a new Branch
+  <https://github.com/chenhunghan/som.js/wiki/Make-a-New-Branch>
