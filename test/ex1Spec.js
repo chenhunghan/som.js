@@ -19,22 +19,21 @@ var M = jStat.rand(modelNumber,dimension),
     Q = jStat.zeros(modelNumber,1);
     //Quantization error, the norm of the difference of an input vector and the best-matching model.
 for (t = 1; t<100; t++) {
-    var inputVector = jStat.rand(1,dimension)[0]
+    var inputVector = jStat.rand(1, dimension)[0];
     for (i = 1; i < modelNumber; i++) {
         var range = jStat([inputVector, M[i]]).range();
         Q[i][0] = jStat(range).norm();
-    };
+    }
     winnerIndex = _.findIndex(Q, [jStat(Q).min(true)]);
     var denominator = (1 + t/300000),
         learningRate = (0.3/denominator),
         radius = Math.round(3/denominator),
-        M = mutiReshape(M,8,8,2),
-        X = mutiReshape(X,1,1,2);
-        ch = ((winnerIndex-1) % 8) + 1
+    //reshapedM = mutiReshape(M,8,8,2),
+    //reshapedInputVector = mutiReshape(inputVector,1,1,2);
+        ch = ((winnerIndex - 1) % 8) + 1;
         cv = Math.floor((winnerIndex-1)/8+ 1);
         for (h = Math.min((ch+radius),8); h<Math.max((ch-radius),1); h++){
-            for (v = Math.min((cv+radius),8); v < Math.max((cv-radius),1); v++){
-
+            for (v = Math.min((cv + radius), 8); v < Math.max((cv - radius), 1); v++) {
             }
         }
 }
@@ -43,22 +42,25 @@ for (t = 1; t<100; t++) {
 //console.log(Q);
 //console.log([jStat(Q).min(true)])
 //console.log(winnerIndex)
-//console.log(A)
+//console.log(A)j;;;;;<<<<>>>>jkljkljkljij
 
-var matrix = jStat.rand(1,2);
-console.log(mutiReshape(matrix,1,1,2))
+var matrix = jStat.rand(4, 2);
+r = mutiReshape(matrix, 2, 2, 2);
+console.log(matrix);
+//console.log(r)
 
 function mutiReshape (matrix, rows, cols, slice) {
     var numbers = ubique.numel(matrix),
-        colBycol = ubique.subsetlin(matrix,ubique.colon(0,numbers-1,1)),
-        slicenumbers = numbers/slice,
-        sliced = ubique.reshape([colBycol],slice,slicenumbers),
-        reshaped = _.map(sliced, function(ele) {
-            return ubique.reshape([ele], rows, cols);
-        });
-    return reshaped
-};
-
+        colBycol = ubique.subsetlin(matrix, ubique.colon(0, numbers - 1, 1));
+    //slicenumbers = numbers/slice,
+    //sliced = ubique.reshape([colBycol],slice,slicenumbers),
+    //reshaped = _.map(sliced, function(ele) {
+    //    return ubique.reshape([ele], rows, cols);
+    //});
+    console.log(numbers);
+    console.log(colBycol);
+    //return reshaped
+}
 /**
 describe('example 1', function(){
     describe('', function(){

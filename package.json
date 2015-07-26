@@ -25,9 +25,14 @@
   },
   "devDependencies": {
     "chai": "^2.3.0",
+    "cwise": "^1.0.8",
     "karma": "^0.12.31",
     "karma-chrome-launcher": "^0.1.8",
     "karma-mocha": "^0.1.10",
-    "mocha": "^2.2.4"
+    "mocha": "^2.2.4",
+    "ndarray": "^1.0.18",
+    "ndarray-ops": "^1.2.2",
+    "ndarray-show": "^1.1.1",
+    "zeros": "^1.0.0"
   }
 }
