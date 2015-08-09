@@ -32,7 +32,9 @@
     "mocha": "^2.2.4",
     "ndarray": "^1.0.18",
     "ndarray-ops": "^1.2.2",
+    "ndarray-pack": "^1.1.1",
     "ndarray-show": "^1.1.1",
+    "ndarray-unpack": "^1.0.0",
     "zeros": "^1.0.0"
   }
 }

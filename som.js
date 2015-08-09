@@ -1,79 +1,92 @@
-var jStat = require('jStat').jStat;
-var ubique = require('ubique');
-var _ = require('underscore');
+var ndarray = require("ndarray");
+var show = require('ndarray-show');
+var ops = require("ndarray-ops");
+var cwise = require("cwise");
 
-/**
- Q = zeros(64,1);           %quantization error
- for t = 1:1000000
- X = rand(1,2);          % training input
- for i = 1:64            % Winner search
- Q(i,1) = norm(X(t,:) - M(i,:));
- end
- [C,c] = min(Q);
- **/
+var modelNumber = 64,
+    dimension = 1, //2 -> [x,y], 3 -> [x,y,z],
+    M = ndarray(new Float32Array(modelNumber*dimension), [dimension, modelNumber]),
+    sqrootM = Math.floor(Math.sqrt(modelNumber)),
+    Q = ndarray(new Float32Array(modelNumber), [1, modelNumber]),
+    trainingTimes = 2000,
+    inputLength = 64,
+    inputVector = ndarray(new Float32Array(dimension*inputLength), [dimension, inputLength])
 
-var modelNumber = 64, dimension = 2;
-var M = jStat.rand(modelNumber, dimension),
-    Q = jStat.zeros(modelNumber, 1);
+ops.random(inputVector)
+ops.random(M)
 
-for (t = 1; t < 100; t++) {
-    var inputVector = jStat.rand(1, dimension)[0];
-    for (i = 1; i < modelNumber; i++) {
-        var range = jStat([inputVector, M[i]]).range();
-        Q[i][0] = jStat(range).norm();
+console.log('---------- original Map')
+console.log('')
+console.log(show(ndarray(new Float32Array(M.data), [sqrootM, sqrootM, dimension])))
+console.log('---------- input')
+console.log('')
+console.log(show(ndarray(new Float32Array(inputVector.data), [sqrootM, sqrootM, dimension])))
+
+
+var distance = cwise({
+    args: ["array", "array"],
+    pre: function(shape) {
+        this.d = 0
+    },
+    body: function(a1, a2) {
+        this.d = this.d + Math.abs((a1-a2)*(a1-a2))
+    },
+    post: function() {
+        return Math.sqrt(this.d)
     }
-    winnerIndex = _.findIndex(Q, [jStat(Q).min(true)]);
+})
 
-    /**Updating the neighborhood
-
-     denom = 1 + t/300000;               % time-dependent parameter
-     a = .3/denom;                       % learning coefficient
-     r = round(3/denom);                 % neighborhood radius
-     M = reshape(M,[8 8 2]);
-     X = reshape(X,[1 1 2]);
-     ch = mod(c-1,8) + 1;                % c starts at top left of the
-     cv = floor((c-1)/8) + 1;            % 2D SOM array and runs downwards!
-     for h = max(ch-r,1):min(ch+r,8)
-     for v = max(cv-r,1):min(cv+r,8)
-     M(h,v,:) = M(h,v,:) + ...
-     a*(X(1,1,:) - M(h,v,:));
-     end
-     end
-
-     **/
-
-    var denominator = (1 + t / 300000),
-        learningRate = (0.3 / denominator),
-        radius = Math.round(3 / denominator),
-    //reshapedM = mutiReshape(M,8,8,2),
-    //reshapedInputVector = mutiReshape(inputVector,1,1,2);
-        ch = ((winnerIndex - 1) % 8) + 1;
-    cv = Math.floor((winnerIndex - 1) / 8 + 1);
-    for (h = Math.min((ch + radius), 8); h < Math.max((ch - radius), 1); h++) {
-        for (v = Math.min((cv + radius), 8); v < Math.max((cv - radius), 1); v++) {
+var learn2D = cwise({
+    pre: function(i, ele, eleN, args) {
+        this.sqrootM = args.sqrootM
+        //Winner Index Calculation in "temp array", which is this.sqrootM * this.sqrootM.
+        this.winnerX = args.winnerIndex % this.sqrootM
+        this.winnerY = (args.winnerIndex - this.winnerX)/this.sqrootM
+    },
+    args: ["index", "array", "array", "scalar"],
+    body: function(i, ele, eleN, args) {
+        //Element Index Calculation in "temp array", which is this.sqrootM * this.sqrootM.
+        var tempArrayX = i[1] % this.sqrootM,
+            tempArrayY = (i[1] - tempArrayX)/this.sqrootM,
+            dist = Math.sqrt( Math.pow((tempArrayX-this.winnerX), 2) + Math.pow((tempArrayY-this.winnerY), 2) );
+        if (dist <= args.learninglRadius) {
+            var dimensionalIndex = i[0]
+            var inputElement = args.inputElement.get(0,dimensionalIndex);
+            eleN = ele + args.learningRate * (inputElement - ele)
         }
     }
+})
+
+for(eindex = 0; eindex < inputLength; eindex++) {
+    var inputElement = inputVector.hi(dimension, eindex+1).lo(0, eindex)
+    for (t = 1; t < trainingTimes; t++) {
+        for (i = 0; i < modelNumber; i++) {
+            //line 1 -> m = M.hi(2,1).lo(0,0); line 2 -> m = M.hi(2,2).lo(0,1)
+            m = M.hi(dimension, i + 1).lo(0, i)
+            d = distance(m, inputElement)
+            Q.set(0, i, d)
+        }
+        winnerIndex = ops.argmin(Q)[1]
+        var denominator = (1 + t / 300000),
+            learningRate = (0.3 / denominator),
+            learninglRadius = (3 / denominator);
+        var args = {
+            'modelNumber': modelNumber,
+            'winnerIndex': winnerIndex,
+            'learninglRadius': learninglRadius,
+            'denominator': denominator,
+            'learningRate': learningRate,
+            'inputElement': inputElement,
+            'dimension': dimension,
+            'sqrootM': sqrootM
+        }
+        newM = M
+        learn2D(M, newM, args)
+        M = newM
+    }
+
 }
 
-//console.log(inputVector)
-//console.log(Q);
-//console.log([jStat(Q).min(true)])
-//console.log(winnerIndex)
-//console.log(A)j;;;;;<<<<>>>>jkljkljkljij
-
-var matrix = jStat.rand(4, 2);
-r = mutiReshape(matrix, 2, 2, 2);
-console.log(matrix);
-//console.log(r)
-
-function mutiReshape(matrix, rows, cols, slice) {
-    var numbers = ubique.numel(matrix),
-        colBycol = ubique.subsetlin(matrix, ubique.colon(0, numbers - 1, 1));
-    //slicenumbers = numbers/slice,
-    //sliced = ubique.reshape([colBycol],slice,slicenumbers),
-    //reshaped = _.map(sliced, function(ele) {
-    //    return ubique.reshape([ele], rows, cols);
-    //});
-    //return reshaped
-}
-
+console.log('---------- trained Map')
+console.log('')
+console.log(show(ndarray(new Float32Array(M.data), [sqrootM, sqrootM, dimension])))

@@ -6,17 +6,15 @@ We plan to translate the core methods of SOM algorithm, which is elaborated in "
 
 The implementation will be written in javascript/typescript and could be used in modern browsers and node.js env. It is depended on these libs for matrix and array operations:
 
-* [Underscore](http://underscorejs.org)
-* [jStat](http://jstat.github.io/all.html)
-* [Ubuque](http://maxto.github.io/doc/contents.html)
+* [ndarray](https://github.com/scijs/ndarray)
 
 ###Teamwork tool:
 
-<https://somjs.slack.com/> Signup [here](https://somjs.slack.com/signup)
+<https://somjs.slack.com/> sign up [here](https://somjs.slack.com/signup)
 
-###How-to in Gihub Wiki:
+###How-to
 
-* Getting Start!
+* Working with Git: Getting Start!
   <https://github.com/chenhunghan/som.js/wiki/Getting-Start!>
-* Make a new Branch
+* Working with Git: Make a new Branch
   <https://github.com/chenhunghan/som.js/wiki/Make-a-New-Branch>
