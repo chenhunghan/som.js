@@ -1,9 +1,7 @@
 var ndarray = require("ndarray")
 var ops = require("ndarray-ops")
 var show =  require('ndarray-show')
-var som = require("../som")
-
-console.log(som)
+var som = require("../src/som.js")
 
 var modelNumber = 64,
     dimension = 1, //2 -> [x,y], 3 -> [x,y,z],
