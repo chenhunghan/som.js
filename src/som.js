@@ -1,12 +1,7 @@
-//import ndarray from "ndarray";
-//import show from 'ndarray-show'
-//import ops from "ndarray-ops"
-//import cwise from "cwise"
-
-var ndarray = require("ndarray")
-var show =  require('ndarray-show')
-var ops = require('ndarray-ops')
-var cwise = require('cwise')
+import ndarray from "ndarray";
+import show from 'ndarray-show'
+import ops from "ndarray-ops"
+import cwise from "cwise"
 
 var distance = cwise({
     args: ["array", "array"],
@@ -42,9 +37,11 @@ var learn2D = cwise({
     }
 })
 
-module.exports = {
+export default class Som {
+    constructor() {
 
-    learn: function (M, inputVector, trainingTimes) {
+    }
+    learn (M, inputVector, trainingTimes) {
 
         var modelNumber = M.size //64
         var dimension =  M.dimension - 1 //1
@@ -84,7 +81,8 @@ module.exports = {
 
         return M
     }
+
+    haga () {
+
+    }
 }
-
-
-
