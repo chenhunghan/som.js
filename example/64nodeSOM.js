@@ -1,7 +1,7 @@
 var ndarray = require("ndarray")
 var ops = require("ndarray-ops")
 var show =  require('ndarray-show')
-var Som = require("../som.js")
+var Som = require("../src/som.js")
 
 som = new Som
 console.log(som)
