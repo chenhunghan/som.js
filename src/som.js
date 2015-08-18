@@ -1,5 +1,4 @@
-import ndarray from "ndarray";
-import show from 'ndarray-show'
+import ndarray from "ndarray"
 import ops from "ndarray-ops"
 import cwise from "cwise"
 
@@ -38,51 +37,47 @@ var learn2D = cwise({
 })
 
 export default class Som {
-    constructor() {
 
+    constructor( M ) {
+        this.M = M
+        this.modelNumber = M.size
+        this.dimension =  M.dimension - 1
+        this.sqrootM = Math.floor(Math.sqrt(this.modelNumber))
+        this.Q = ndarray(new Float32Array(this.modelNumber), [1, this.modelNumber])
     }
-    learn (M, inputVector, trainingTimes) {
 
-        var modelNumber = M.size //64
-        var dimension =  M.dimension - 1 //1
-        var sqrootM = Math.floor(Math.sqrt(modelNumber)) //8
-        var inputLength = inputVector.size //64
-        var Q = ndarray(new Float32Array(modelNumber), [1, modelNumber])
+    learn(inputVector, trainingTimes) {
+        var inputLength = inputVector.size
 
         for(var eindex = 0; eindex < inputLength; eindex++) {
-            var inputElement = inputVector.hi(dimension, eindex+1).lo(0, eindex)
+            var inputElement = inputVector.hi(this.dimension, eindex+1).lo(0, eindex)
             for (var t = 1; t < trainingTimes; t++) {
-                for (var i = 0; i < modelNumber; i++) {
+                for (var i = 0; i < this.modelNumber; i++) {
                     //line 1 -> m = M.hi(2,1).lo(0,0); line 2 -> m = M.hi(2,2).lo(0,1)
-                    var m = M.hi(dimension, i + 1).lo(0, i),
+                    var m = this.M.hi(this.dimension, i + 1).lo(0, i),
                         d = distance(m, inputElement);
-                    Q.set(0, i, d)
+                    this.Q.set(0, i, d)
                 }
-                var winnerIndex = ops.argmin(Q)[1],
+                var winnerIndex = ops.argmin(this.Q)[1],
                     denominator = (1 + t / 300000),
                     learningRate = (0.3 / denominator),
                     learninglRadius = (3 / denominator),
                     args = {
-                        'modelNumber': modelNumber,
+                        'modelNumber': this.modelNumber,
                         'winnerIndex': winnerIndex,
                         'learninglRadius': learninglRadius,
                         'denominator': denominator,
                         'learningRate': learningRate,
                         'inputElement': inputElement,
-                        'dimension': dimension,
-                        'sqrootM': sqrootM
+                        'dimension': this.dimension,
+                        'sqrootM': this.sqrootM
                     },
-                    newM = M;
-                learn2D(M, newM, args)
-                M = newM
+                    newM = this.M; //set newM as same as M
+                learn2D(this.M, newM, args)
+                this.M = newM
             }
 
         }
-
-        return M
-    }
-
-    haga () {
-
+        return this.M
     }
 }

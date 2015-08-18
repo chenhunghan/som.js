@@ -4,9 +4,8 @@
   "description": "Self-Organizing Map(SOM) in Pure Javascript",
   "homepage": "http://chenhunghan.github.io/som.js/",
   "scripts": {
-    "test": "mocha --require ./test/helper.js",
-    "webpack": "./node_modules/webpack/bin/webpack.js --progress --colors",
-    "alltest": "./node_modules/mocha/bin/mocha && ./node_modules/karma/bin/karma start ./test/karma_config.js"
+    "compile": "node ./node_modules/gulp/bin/gulp.js",
+    "prepublish": "npm run compile"
   },
   "repository": {
     "type": "git",
@@ -24,23 +23,17 @@
     "Kohonen map",
     "learning algorithm"
   ],
-  "author": "Jyrki Messo, Hung-Han Chen",
+  "author": "Hung-Han Chen",
   "license": "MIT",
   "dependencies": {
     "cwise": "^1.0.8",
     "ndarray": "^1.0.18",
     "ndarray-ops": "^1.2.2",
-    "ndarray-show": "^1.1.1",
-    "ndarray-pack": "^1.1.1",
-    "ndarray-unpack": "^1.0.0"
+    "ndarray-show": "^2.0.0"
   },
   "devDependencies": {
-    "babel-core": "^5.8.21",
-    "babel-loader": "^5.3.2",
-    "karma": "^0.12.31",
-    "karma-chrome-launcher": "^0.1.8",
-    "karma-mocha": "^0.1.10",
-    "mocha": "^2.2.4",
-    "webpack": "^1.11.0"
+    "babel-core": "^5.8.22",
+    "gulp": "^3.9.0",
+    "gulp-babel": "^5.2.0"
   }
 }
