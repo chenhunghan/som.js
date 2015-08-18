@@ -9,8 +9,12 @@ var modelNumber = 16,
     dimension = 2, //2 -> [x,y], 3 -> [x,y,z],
 =======
 var modelNumber = 64,
+<<<<<<< HEAD
     dimension = 4, //2 -> [x,y], 3 -> [x,y,z],
 >>>>>>> modify demo a little bit
+=======
+    dimension = 1, //2 -> [x,y], 3 -> [x,y,z],
+>>>>>>> some bad changes
     M = ndarray(new Float32Array(modelNumber*dimension), [dimension, modelNumber]),
     sqrootM = Math.floor(Math.sqrt(modelNumber)),
     inputVector = ndarray(new Float32Array(dimension*modelNumber), [dimension, modelNumber]),
