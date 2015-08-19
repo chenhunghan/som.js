@@ -11,10 +11,10 @@ The implementation will be written in javascript/typescript and could be used in
 ###How-to-dev
 
 * install [node.js](https://nodejs.org) environment
-* clone or download the repository
-* go to directory and type ``npm install`` to install all the dependencies
-* There is an example on how to comsume the API which som.js offered. Please find it in ``./example/64nodeSOM.js`` which is also written in ES6, run it by install babel-node (``npm install node-babel -g``) and run by ``node-babel example/64nodeSOM.js.``
-* ``./src`` is the source code written in ECMAScript 6, we use gulp + bable to compile it inot ECMAScript 5. Type ``npm compile`` to start compiling.
+* ``git clone`` or download the repository
+* go to the directory and type ``npm install`` to install all the dependencies from npm
+* There is an example on how to comsume the API which som.js offered. Please find it in ``./example/64nodeSOM.js`` which is also written in [ECMAScript 6](https://babeljs.io/docs/learn-es2015/), run the example by installing babel-node (``npm install node-babel -g``) and run by ``node-babel example/64nodeSOM.js.``
+* ``./src`` is the source code of this npm module (for node.js) written in ECMAScript 6, we choose [gulp](http://gulpjs.com) + [bable](https://babeljs.io) to compile it into noramal javascript. Run ``npm compile`` to start compiling.
 * working with Git: Getting Start!
   <https://github.com/chenhunghan/som.js/wiki/Getting-Start!>
 * working with Git: Make a new Branch
