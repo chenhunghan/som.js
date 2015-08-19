@@ -1,6 +1,6 @@
 {
   "name": "som.js",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Self-Organizing Map(SOM) in Pure Javascript",
   "homepage": "http://chenhunghan.github.io/som.js/",
   "scripts": {
@@ -23,7 +23,7 @@
     "Kohonen map",
     "learning algorithm"
   ],
-  "author": "Hung-Han Chen",
+  "author": "Hung-Han Chen <chenhungh@gmail.com> (http://chenhunghan.github.io/)",
   "license": "MIT",
   "dependencies": {
     "cwise": "^1.0.8",
