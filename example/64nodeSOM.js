@@ -4,7 +4,7 @@ import cwise from "cwise"
 import show from 'ndarray-show'
 import Som from "../dist/som.js"
 
-var modelNumber = 16,
+var modelNumber = 128,
     dimension = 1, //2 -> [x,y], 3 -> [x,y,z],
     M = ndarray(new Float32Array(modelNumber*dimension), [dimension, modelNumber]),
     sqrootM = Math.floor(Math.sqrt(modelNumber)),
@@ -16,6 +16,11 @@ ops.random(M)
 
 var som = new Som(M)
 
+function callback(currentmap, currentTime) {
+    console.log(currentTime)
+    console.log(show(ndarray(new Float32Array(currentmap.data), [dimension, sqrootM, sqrootM])))
+}
+
 console.log('---------- original Map')
 console.log('')
 console.log(show(ndarray(new Float32Array(M.data), [dimension, sqrootM, sqrootM])))
@@ -24,5 +29,5 @@ console.log('')
 console.log(show(ndarray(new Float32Array(M.data), [dimension, sqrootM, sqrootM])))
 console.log('---------- trained Map')
 console.log('')
-var trainedMap = som.learn(inputVector, trainingTimes)
+var trainedMap = som.learn(inputVector, trainingTimes, callback)
 console.log(show(ndarray(new Float32Array(trainedMap.data), [dimension, sqrootM, sqrootM])))

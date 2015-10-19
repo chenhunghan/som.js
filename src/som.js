@@ -46,7 +46,7 @@ export default class Som {
         this.Q = ndarray(new Float32Array(this.modelNumber), [1, this.modelNumber])
     }
 
-    learn(inputVector, trainingTimes) {
+    learn(inputVector, trainingTimes, callback) {
         var inputLength = inputVector.size
 
         for(var eindex = 0; eindex < inputLength; eindex++) {
@@ -75,6 +75,11 @@ export default class Som {
                     newM = this.M; //set newM as same as M
                 learn2D(this.M, newM, args)
                 this.M = newM
+                if (callback != undefined) {
+                    time = t+1
+                    callback(newM,time)
+                }
+
             }
 
         }

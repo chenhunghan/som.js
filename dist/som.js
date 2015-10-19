@@ -69,7 +69,7 @@ var Som = (function () {
 
     _createClass(Som, [{
         key: "learn",
-        value: function learn(inputVector, trainingTimes) {
+        value: function learn(inputVector, trainingTimes, callback) {
             var inputLength = inputVector.size;
 
             for (var eindex = 0; eindex < inputLength; eindex++) {
@@ -98,6 +98,10 @@ var Som = (function () {
                         newM = this.M; //set newM as same as M
                     learn2D(this.M, newM, args);
                     this.M = newM;
+                    if (callback != undefined) {
+                        time = t + 1;
+                        callback(newM, time);
+                    }
                 }
             }
             return this.M;
