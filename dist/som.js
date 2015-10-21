@@ -3,12 +3,9 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+exports.som = som;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var _ndarray = require("ndarray");
 
@@ -56,60 +53,47 @@ var learn2D = (0, _cwise2["default"])({
     }
 });
 
-var Som = (function () {
-    function Som(M) {
-        _classCallCheck(this, Som);
+function som(M, inputVector, trainingTimes, callback) {
 
-        this.M = M;
-        this.modelNumber = M.size;
-        this.dimension = M.dimension - 1;
-        this.sqrootM = Math.floor(Math.sqrt(this.modelNumber));
-        this.Q = (0, _ndarray2["default"])(new Float32Array(this.modelNumber), [1, this.modelNumber]);
-    }
+    var modelNumber = M.size;
+    var dimension = M.dimension - 1;
+    var sqrootM = Math.floor(Math.sqrt(modelNumber));
+    var Q = (0, _ndarray2["default"])(new Float32Array(modelNumber), [1, modelNumber]);
+    var mapWithTimeLine = new Map();
 
-    _createClass(Som, [{
-        key: "learn",
-        value: function learn(inputVector, trainingTimes, callback) {
-            var inputLength = inputVector.size;
+    var inputLength = inputVector.size;
 
-            for (var eindex = 0; eindex < inputLength; eindex++) {
-                var inputElement = inputVector.hi(this.dimension, eindex + 1).lo(0, eindex);
-                for (var t = 1; t < trainingTimes; t++) {
-                    for (var i = 0; i < this.modelNumber; i++) {
-                        //line 1 -> m = M.hi(2,1).lo(0,0); line 2 -> m = M.hi(2,2).lo(0,1)
-                        var m = this.M.hi(this.dimension, i + 1).lo(0, i),
-                            d = distance(m, inputElement);
-                        this.Q.set(0, i, d);
-                    }
-                    var winnerIndex = _ndarrayOps2["default"].argmin(this.Q)[1],
-                        denominator = 1 + t / 300000,
-                        learningRate = 0.3 / denominator,
-                        learninglRadius = 3 / denominator,
-                        args = {
-                        'modelNumber': this.modelNumber,
-                        'winnerIndex': winnerIndex,
-                        'learninglRadius': learninglRadius,
-                        'denominator': denominator,
-                        'learningRate': learningRate,
-                        'inputElement': inputElement,
-                        'dimension': this.dimension,
-                        'sqrootM': this.sqrootM
-                    },
-                        newM = this.M; //set newM as same as M
-                    learn2D(this.M, newM, args);
-                    this.M = newM;
-                    if (callback != undefined) {
-                        time = t + 1;
-                        callback(newM, time);
-                    }
-                }
+    for (var eindex = 0; eindex < inputLength; eindex++) {
+        var inputElement = inputVector.hi(dimension, eindex + 1).lo(0, eindex);
+        for (var t = 1; t < trainingTimes; t++) {
+            for (var i = 0; i < modelNumber; i++) {
+                //line 1 -> m = M.hi(2,1).lo(0,0); line 2 -> m = M.hi(2,2).lo(0,1)
+                var m = M.hi(dimension, i + 1).lo(0, i),
+                    d = distance(m, inputElement);
+                Q.set(0, i, d);
             }
-            return this.M;
+            var winnerIndex = _ndarrayOps2["default"].argmin(Q)[1],
+                denominator = 1 + t / 300000,
+                learningRate = 0.3 / denominator,
+                learninglRadius = 3 / denominator,
+                args = {
+                'modelNumber': modelNumber,
+                'winnerIndex': winnerIndex,
+                'learninglRadius': learninglRadius,
+                'denominator': denominator,
+                'learningRate': learningRate,
+                'inputElement': inputElement,
+                'dimension': dimension,
+                'sqrootM': sqrootM
+            };
+            learn2D(M, M, args);
+            var time = t + eindex + trainingTimes * eindex - 1;
+            //console.log(time)
+            mapWithTimeLine.set(time, JSON.stringify(M.data));
+            if (callback != undefined) {
+                callback(JSON.stringify(M.data), time);
+            }
         }
-    }]);
-
-    return Som;
-})();
-
-exports["default"] = Som;
-module.exports = exports["default"];
+    }
+    return mapWithTimeLine;
+}

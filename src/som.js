@@ -36,53 +36,47 @@ var learn2D = cwise({
     }
 })
 
-export default class Som {
+export function som (M, inputVector, trainingTimes, callback) {
 
-    constructor( M ) {
-        this.M = M
-        this.modelNumber = M.size
-        this.dimension =  M.dimension - 1
-        this.sqrootM = Math.floor(Math.sqrt(this.modelNumber))
-        this.Q = ndarray(new Float32Array(this.modelNumber), [1, this.modelNumber])
-    }
+    let modelNumber = M.size
+    let dimension =  M.dimension - 1
+    let sqrootM = Math.floor(Math.sqrt(modelNumber))
+    let Q = ndarray(new Float32Array(modelNumber), [1, modelNumber])
+    let mapWithTimeLine = new Map()
 
-    learn(inputVector, trainingTimes, callback) {
-        var inputLength = inputVector.size
+    var inputLength = inputVector.size
 
-        for(var eindex = 0; eindex < inputLength; eindex++) {
-            var inputElement = inputVector.hi(this.dimension, eindex+1).lo(0, eindex)
-            for (var t = 1; t < trainingTimes; t++) {
-                for (var i = 0; i < this.modelNumber; i++) {
-                    //line 1 -> m = M.hi(2,1).lo(0,0); line 2 -> m = M.hi(2,2).lo(0,1)
-                    var m = this.M.hi(this.dimension, i + 1).lo(0, i),
-                        d = distance(m, inputElement);
-                    this.Q.set(0, i, d)
-                }
-                var winnerIndex = ops.argmin(this.Q)[1],
-                    denominator = (1 + t / 300000),
-                    learningRate = (0.3 / denominator),
-                    learninglRadius = (3 / denominator),
-                    args = {
-                        'modelNumber': this.modelNumber,
-                        'winnerIndex': winnerIndex,
-                        'learninglRadius': learninglRadius,
-                        'denominator': denominator,
-                        'learningRate': learningRate,
-                        'inputElement': inputElement,
-                        'dimension': this.dimension,
-                        'sqrootM': this.sqrootM
-                    },
-                    newM = this.M; //set newM as same as M
-                learn2D(this.M, newM, args)
-                this.M = newM
-                if (callback != undefined) {
-                    time = t+1
-                    callback(newM,time)
-                }
-
+    for(var eindex = 0; eindex < inputLength; eindex++) {
+        var inputElement = inputVector.hi(dimension, eindex+1).lo(0, eindex)
+        for (var t = 1; t < trainingTimes; t++) {
+            for (var i = 0; i < modelNumber; i++) {
+                //line 1 -> m = M.hi(2,1).lo(0,0); line 2 -> m = M.hi(2,2).lo(0,1)
+                var m = M.hi(dimension, i + 1).lo(0, i),
+                    d = distance(m, inputElement);
+                Q.set(0, i, d)
             }
-
+            let winnerIndex = ops.argmin(Q)[1],
+                denominator = (1 + t / 300000),
+                learningRate = (0.3 / denominator),
+                learninglRadius = (3 / denominator),
+                args = {
+                    'modelNumber': modelNumber,
+                    'winnerIndex': winnerIndex,
+                    'learninglRadius': learninglRadius,
+                    'denominator': denominator,
+                    'learningRate': learningRate,
+                    'inputElement': inputElement,
+                    'dimension': dimension,
+                    'sqrootM': sqrootM
+                }
+            learn2D(M, M, args)
+            let time = t + eindex + trainingTimes * (eindex) - 1
+            //console.log(time)
+            mapWithTimeLine.set(time, JSON.stringify(M.data))
+            if (callback != undefined) {
+                callback(JSON.stringify(M.data), time)
+            }
         }
-        return this.M
     }
+    return mapWithTimeLine
 }
