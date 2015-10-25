@@ -29,7 +29,8 @@
     "cwise": "^1.0.8",
     "ndarray": "^1.0.18",
     "ndarray-ops": "^1.2.2",
-    "ndarray-show": "^2.0.0"
+    "ndarray-show": "^2.0.0",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
     "babel-core": "^5.8.22",

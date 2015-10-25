@@ -1,6 +1,7 @@
 import ndarray from "ndarray"
 import ops from "ndarray-ops"
 import cwise from "cwise"
+import show from 'ndarray-show'
 
 var distance = cwise({
     args: ["array", "array"],
@@ -20,7 +21,13 @@ var learn2D = cwise({
         this.sqrootM = args.sqrootM
         //Winner Index Calculation in "temp array", which is this.sqrootM * this.sqrootM.
         this.winnerX = args.winnerIndex % this.sqrootM
+        this.remainder = args.modelNumber % this.sqrootM
         this.winnerY = (args.winnerIndex - this.winnerX)/this.sqrootM
+        //console.log('model numbers ' + args.modelNumber)
+        //console.log('sqt ' + this.sqrootM)
+        //console.log('reminder ' + this.remainder)
+        //console.log('winnerIndex ' + args.winnerIndex)
+        //console.log([this.winnerX, this.winnerY])
     },
     args: ["index", "array", "array", "scalar"],
     body: function(i, ele, eleN, args) {
@@ -28,9 +35,14 @@ var learn2D = cwise({
         var tempArrayX = i[1] % this.sqrootM,
             tempArrayY = (i[1] - tempArrayX)/this.sqrootM,
             dist = Math.sqrt( Math.pow((tempArrayX-this.winnerX), 2) + Math.pow((tempArrayY-this.winnerY), 2) );
-        if (dist <= args.learninglRadius) {
-            var dimensionalIndex = i[0],
-                inputElement = args.inputElement.get(0,dimensionalIndex);
+        //console.log('tempArrayX ' + tempArrayX)
+        //console.log('tempArrayY ' + tempArrayY)
+        //console.log('dist ' + dist)
+        var dimensionalIndex = i[0],
+            inputElement = args.inputElement.get(0,dimensionalIndex);
+        if (dist <= args.learninglRadius && inputElement != undefined) {
+            //console.log('dimensionalIndex ' + dimensionalIndex)
+            //console.log('inputElement ' + inputElement)
             eleN = ele + args.learningRate * (inputElement - ele)
         }
     }
@@ -48,6 +60,7 @@ export function som (M, inputVector, trainingTimes, callback) {
 
     for(var eindex = 0; eindex < inputLength; eindex++) {
         var inputElement = inputVector.hi(dimension, eindex+1).lo(0, eindex)
+        //console.log('inputElement ' + inputElement)
         for (var t = 1; t < trainingTimes; t++) {
             for (var i = 0; i < modelNumber; i++) {
                 //line 1 -> m = M.hi(2,1).lo(0,0); line 2 -> m = M.hi(2,2).lo(0,1)
@@ -69,10 +82,14 @@ export function som (M, inputVector, trainingTimes, callback) {
                     'dimension': dimension,
                     'sqrootM': sqrootM
                 }
+            //console.log(args)
             learn2D(M, M, args)
+            //console.log('------M--------')
+            //console.log(show(M))
             let time = t + eindex + trainingTimes * (eindex) - 1
             //console.log(time)
-            mapWithTimeLine.set(time, JSON.stringify(M.data))
+            var mapData = JSON.stringify(M.data)
+            mapWithTimeLine.set(time, mapData)
             if (callback != undefined) {
                 callback(JSON.stringify(M.data), time)
             }
