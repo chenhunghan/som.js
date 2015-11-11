@@ -56,12 +56,13 @@ export function som (M, inputVector, trainingTimes, callback) {
     let Q = ndarray(new Float32Array(modelNumber), [1, modelNumber])
     let mapWithTimeLine = new Map()
 
-    var inputLength = inputVector.size
+    var inputLength = inputVector.shape[1]
 
     for(var eindex = 0; eindex < inputLength; eindex++) {
         var inputElement = inputVector.hi(dimension, eindex+1).lo(0, eindex)
-        //console.log('inputElement ' + inputElement)
-        for (var t = 1; t < trainingTimes; t++) {
+        for (var t = 0; t < trainingTimes; t++) {
+            let currentCycle = eindex*trainingTimes + t + 1
+            //console.log(currentCycle)
             for (var i = 0; i < modelNumber; i++) {
                 //line 1 -> m = M.hi(2,1).lo(0,0); line 2 -> m = M.hi(2,2).lo(0,1)
                 var m = M.hi(dimension, i + 1).lo(0, i),
@@ -82,18 +83,15 @@ export function som (M, inputVector, trainingTimes, callback) {
                     'dimension': dimension,
                     'sqrootM': sqrootM
                 }
-            //console.log(args)
+
             learn2D(M, M, args)
-            //console.log('------M--------')
-            //console.log(show(M))
-            let time = t + eindex + trainingTimes * (eindex) - 1
-            //console.log(time)
             var mapData = JSON.stringify(M.data)
-            mapWithTimeLine.set(time, mapData)
+            mapWithTimeLine.set(currentCycle, mapData)
             if (callback != undefined) {
-                callback(JSON.stringify(M.data), time)
+                callback(mapData, currentCycle)
             }
         }
+
     }
     return mapWithTimeLine
 }

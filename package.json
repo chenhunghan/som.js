@@ -1,6 +1,6 @@
 {
   "name": "som.js",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "Self-Organizing Map(SOM) in Pure Javascript",
   "homepage": "http://chenhunghan.github.io/som.js/",
   "scripts": {
@@ -16,7 +16,7 @@
   },
   "keywords": [
     "SOM",
-    "self-prganizing map",
+    "self-organizing map",
     "artificial neural network",
     "unsupervised learning",
     "data visualizing",
