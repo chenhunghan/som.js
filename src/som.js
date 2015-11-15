@@ -48,7 +48,7 @@ var learn2D = cwise({
     }
 })
 
-export function som (M, inputVector, trainingTimes, callback) {
+export function som (M, inputVector, trainingTimes, callback, denominator = 300000, Rate = 0.3 , Radius = 3) {
 
     let modelNumber = M.size
     let dimension =  M.dimension - 1
@@ -70,14 +70,14 @@ export function som (M, inputVector, trainingTimes, callback) {
                 Q.set(0, i, d)
             }
             let winnerIndex = ops.argmin(Q)[1],
-                denominator = (1 + t / 300000),
-                learningRate = (0.3 / denominator),
-                learninglRadius = (3 / denominator),
+                denominatorWithTime = (1 + t /denominator),
+                learningRate = (Rate / denominatorWithTime),
+                learninglRadius = (Radius / denominatorWithTime),
                 args = {
                     'modelNumber': modelNumber,
                     'winnerIndex': winnerIndex,
                     'learninglRadius': learninglRadius,
-                    'denominator': denominator,
+                    'denominator': denominatorWithTime,
                     'learningRate': learningRate,
                     'inputElement': inputElement,
                     'dimension': dimension,

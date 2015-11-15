@@ -69,6 +69,9 @@ var learn2D = (0, _cwise2["default"])({
 });
 
 function som(M, inputVector, trainingTimes, callback) {
+    var denominator = arguments.length <= 4 || arguments[4] === undefined ? 300000 : arguments[4];
+    var Rate = arguments.length <= 5 || arguments[5] === undefined ? 0.3 : arguments[5];
+    var Radius = arguments.length <= 6 || arguments[6] === undefined ? 3 : arguments[6];
 
     var modelNumber = M.size;
     var dimension = M.dimension - 1;
@@ -90,14 +93,14 @@ function som(M, inputVector, trainingTimes, callback) {
                 Q.set(0, i, d);
             }
             var winnerIndex = _ndarrayOps2["default"].argmin(Q)[1],
-                denominator = 1 + t / 300000,
-                learningRate = 0.3 / denominator,
-                learninglRadius = 3 / denominator,
+                denominatorWithTime = 1 + t / denominator,
+                learningRate = Rate / denominatorWithTime,
+                learninglRadius = Radius / denominatorWithTime,
                 args = {
                 'modelNumber': modelNumber,
                 'winnerIndex': winnerIndex,
                 'learninglRadius': learninglRadius,
-                'denominator': denominator,
+                'denominator': denominatorWithTime,
                 'learningRate': learningRate,
                 'inputElement': inputElement,
                 'dimension': dimension,
