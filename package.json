@@ -1,10 +1,10 @@
 {
   "name": "som.js",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Self-Organizing Map(SOM) in Pure Javascript",
   "homepage": "http://chenhunghan.github.io/som.js/",
   "scripts": {
-    "compile": "node ./node_modules/gulp/bin/gulp.js",
+    "compile": "node --max-old-space-size=2000 ./node_modules/.bin/gulp",
     "prepublish": "npm run compile"
   },
   "repository": {
@@ -13,6 +13,61 @@
   },
   "bugs": {
     "url": "https://github.com/chenhunghan/som.js/issues"
+  },
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "extends": "airbnb",
+    "env": {
+      "browser": true,
+      "node": true,
+      "mocha": true,
+      "es6": true
+    },
+    "parserOptions": {
+      "ecmaVersion": 6,
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    },
+    "rules": {
+      "arrow-body-style": [
+        2,
+        "as-needed"
+      ],
+      "comma-dangle": [
+        2,
+        "always-multiline"
+      ],
+      "import/imports-first": 0,
+      "import/newline-after-import": 0,
+      "import/no-extraneous-dependencies": 0,
+      "import/no-named-as-default": 0,
+      "import/no-unresolved": 2,
+      "import/prefer-default-export": 0,
+      "indent": [
+        2,
+        2,
+        {
+          "SwitchCase": 1
+        }
+      ],
+      "max-len": 0,
+      "no-global-assign": 0,
+      "no-unsafe-negation": 0,
+      "newline-per-chained-call": 0,
+      "no-console": 1,
+      "no-use-before-define": 0,
+      "prefer-template": 2,
+      "require-yield": 0
+    },
+    "settings": {
+      "import/resolver": {
+        "webpack": {
+          "config": "./modules.js"
+        }
+      }
+    }
   },
   "keywords": [
     "SOM",
@@ -26,15 +81,23 @@
   "author": "Hung-Han Chen <chenhungh@gmail.com> (http://chenhunghan.github.io/)",
   "license": "MIT",
   "dependencies": {
-    "cwise": "^1.0.8",
+    "cwise": "^1.0.9",
     "ndarray": "^1.0.18",
     "ndarray-ops": "^1.2.2",
     "ndarray-show": "^2.0.0",
     "underscore": "^1.8.3"
   },
   "devDependencies": {
-    "babel-core": "^5.8.22",
-    "gulp": "^3.9.0",
-    "gulp-babel": "^5.2.0"
+    "babel-core": "^6.23.1",
+    "babel-eslint": "^7.1.1",
+    "babel-preset-latest": "^6.22.0",
+    "eslint": "^3.15.0",
+    "eslint-config-airbnb": "^12.0.0",
+    "eslint-import-resolver-webpack": "^0.6.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.9.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2"
   }
 }

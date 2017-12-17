@@ -1,12 +1,14 @@
-import ndarray from "ndarray"
-import ops from "ndarray-ops"
-import cwise from "cwise"
-import show from 'ndarray-show'
-import { som } from "../dist/som.js"
-import _ from "underscore"
+'use strict';
+
+const ndarray = require('ndarray');
+const ops = require('ndarray-ops');
+const cwise = require('cwise');
+const show = require('ndarray-show');
+const som = require('../dist/som.js')
+const _ = require('underscore');
 
 var modelNumber = 216,
-    dimension = 12, //2 -> [x,y], 3 -> [x,y,z],
+    dimension = 4, //2 -> [x,y], 3 -> [x,y,z],
     M = ndarray(new Float32Array(modelNumber*dimension), [dimension, modelNumber]),
     sqrootM = Math.floor(Math.sqrt(modelNumber)),
     inputNumber = 20,
